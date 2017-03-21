@@ -1,0 +1,47 @@
+buildscript {
+    repositories {
+        mavenCentral()
+        maven {
+            url "http://127.0.0.1:8081/repository/maven-public/"
+        }
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.5.1.RELEASE")
+        classpath 'gusvmx.plugin:gradle-release:2.4.8'
+    }
+}
+
+group='com.gusvmx.jms'
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'net.researchgate.release'
+apply plugin: 'maven-publish'
+apply from: "${rootDir}/artifactPublication.gradle"
+
+jar {
+    manifest {
+        attributes 'Implementation-Title': 'JMS Publisher',
+                   'Implementation-Version': version
+    }
+}
+
+repositories {
+    mavenCentral()
+    maven {
+        url "http://127.0.0.1:8081/repository/maven-public/"
+    }
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+dependencies {
+    compile("org.springframework.boot:spring-boot-starter-activemq")
+    compile("org.apache.activemq:activemq-broker")
+    compile("com.fasterxml.jackson.core:jackson-databind")
+    compile("com.gusvmx.protobuf:proto-model:0.2.0")
+    testCompile group: 'junit', name: 'junit', version: '4.+'
+}
